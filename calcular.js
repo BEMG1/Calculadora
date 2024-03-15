@@ -1,28 +1,27 @@
-function calcular() {
-    var numero1 = parseFloat(document.getElementById("numero1").value);
-    var numero2 = parseFloat(document.getElementById("numero2").value);
-    var operador = document.getElementById("operador").value;
+var displayValue = '';
 
-    var resultado = realizarOperacion(numero1, numero2, operador);
+function appendToDisplay(value) {
 
-    document.getElementById("resultado").innerHTML = "Resultado: " + resultado.toFixed(2);
+    if (value === '%') {
+        displayValue += '/100';
+    } else {
+
+    displayValue += value;
+    }
+    document.getElementById('display').value = displayValue;
 }
 
-function realizarOperacion(num1, num2, operador) {
-    switch (operador) {
-        case "+":
-            return num1 + num2;
-        case "-":
-            return num1 - num2;
-        case "*":
-            return num1 * num2;
-        case "/":
-            if (num2 !== 0) {
-                return num1 / num2;
-            } else {
-                return "Error: No se puede dividir por cero";
-            }
-        default:
-            return "Error: Operador no válido";
+function clearDisplay() {
+    displayValue = '';
+    document.getElementById('display').value = '';
+}
+
+function calcular() {
+    try {
+     const result = eval(displayValue);
+     document.getElementById('display').value = result;
+     displayValue = result.toString();
+    } catch (error) {
+        document.getElementById('display').value = 'Error';
     }
 }
